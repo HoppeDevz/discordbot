@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer');
+const axios = require("axios");
 
 let GameList = "``` \n CSGO \n ```";
 
@@ -46,5 +47,18 @@ module.exports = {
                 return resolve({ InGameCounter });
             }
         })
+    },
+
+    // http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=730&key=<<KEY>>&steamid=<<PROFILEID>>
+    GetPlayerStatusCSGO: (SteamID) => {
+        return new Promise((resolve, reject) => {
+            axios.default.get(`http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=730&key=${process.env.STEAM_WEB_API_KEY}&steamid=${SteamID}`)
+                .then(response => {
+                    resolve({ error: false, data: response.data })
+                })
+                .catch(err => {
+                    reject({ error: true })
+                })
+        });
     }
 }
