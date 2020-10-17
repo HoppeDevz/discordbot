@@ -4,6 +4,7 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const steam = require("./src/services/steam");
 const twitch = require("./src/services/twitch");
+const axios = require("axios");
 
 /*client.music = require("discord.js-musicbot-addon");
 
@@ -12,7 +13,12 @@ client.music.start(client, {
 });*/
 
 (async () => {
-    steam.GetGameStatus("CSGO").then(res => console.log(res));
+    searchWord = "spider-man"
+    axios.default(`https://api.giphy.com/v1/gifs/search?api_key=${process.env.GIPHY_TOKEN}&q=${searchWord}&limit=25&offset=0&rating=g&lang=en`)
+        .then(response => {
+            console.log(response.data)
+        })
+        .catch(err => console.log(err));
 })();
 
 client.on("ready", () => {
@@ -41,7 +47,23 @@ BotRegisterCommand("!gamestatus", function (args, command, msg) {
             msg.channel.send(err.gamelist);
         })
     }
+});
 
+BotRegisterCommand("!gif", function (args, command, msg) {
+    if (!args[1]) {
+        msg.channel.send("Use: !gif <gif-name>");
+    } else {
+        axios.default(`https://api.giphy.com/v1/gifs/search?api_key=${process.env.GIPHY_TOKEN}&q=${args[1]}&limit=25&offset=0&rating=g&lang=en`)
+            .then(response => {
+                const arr = response.data.data;
+
+                const gifID = arr[0].id;
+                const baseURL = `https://media2.giphy.com/media/${gifID}/giphy.gif`;
+
+                msg.channel.send("", { files: [baseURL] });
+            })
+            .catch(err => console.log(err));
+    }
 });
 
 BotRegisterCommand("!topsellers", function (args, command, msg) {
