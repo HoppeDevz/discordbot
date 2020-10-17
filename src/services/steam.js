@@ -1,5 +1,11 @@
 const puppeteer = require('puppeteer');
 
+let GameList = "``` \n CSGO \n ```";
+
+let GameNameIds = {
+    "CSGO": 730
+}
+
 module.exports = {
     GetTopSellers: () => {
         return new Promise(async (resolve, reject) => {
@@ -22,5 +28,23 @@ module.exports = {
                 // console.log((await titles[0].getProperty('textContent')).jsonValue());
             }, 2000)
         });
+    },
+
+    GetGameStatus: (GameName) => {
+        return new Promise(async (resolve, reject) => {
+            if (!GameNameIds[GameName]) return reject({ error: true, gamelist: GameList });
+            const browser = await puppeteer.launch();
+            const page = await browser.newPage();
+            await page.goto(`https://steamcommunity.com/app/${GameNameIds[GameName]}`);
+
+            let InGameCounter = await page.$$(".apphub_NumInApp");
+
+            if (InGameCounter[0]) {
+                InGameCounter = await InGameCounter[0].getProperty('textContent');
+                InGameCounter = InGameCounter._remoteObject.value;
+
+                return resolve({ InGameCounter });
+            }
+        })
     }
 }

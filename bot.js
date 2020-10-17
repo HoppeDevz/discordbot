@@ -5,9 +5,15 @@ const client = new Discord.Client();
 const steam = require("./src/services/steam");
 const twitch = require("./src/services/twitch");
 
-/*(async () => {
-    twitch.GetStreamStatus("tfue").then(res => console.log(res));
-})();*/
+/*client.music = require("discord.js-musicbot-addon");
+
+client.music.start(client, {
+    youtubeKey: 'UsnRQJxanVM'
+});*/
+
+(async () => {
+    steam.GetGameStatus("CSGO").then(res => console.log(res));
+})();
 
 client.on("ready", () => {
     console.log(`Logged in as ${client.user.tag}`);
@@ -22,6 +28,21 @@ function BotRegisterCommand(CommandName, CallBack) {
         }
     });
 }
+
+BotRegisterCommand("!gamestatus", function (args, command, msg) {
+    if (!args[1]) {
+        msg.channel.send("Use: !gamestatus <game>");
+    } else {
+        steam.GetGameStatus(args[1]).then(res => {
+            msg.channel.send(res.InGameCounter);
+        }).catch(err => {
+            msg.channel.send("Este jogo não está disponível!");
+            msg.channel.send("Confira a lista de jogos disponíveis:");
+            msg.channel.send(err.gamelist);
+        })
+    }
+
+});
 
 BotRegisterCommand("!topsellers", function (args, command, msg) {
     // args[1] =>
