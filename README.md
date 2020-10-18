@@ -2,7 +2,7 @@
   <img width="460" src="https://logodownload.org/wp-content/uploads/2017/11/discord-logo-icone.png">
 </p>
 
-## 🤖 - My Discord Bot -
+## 🤖 My Discord Bot
 
 👉 List of Commands
 ```
