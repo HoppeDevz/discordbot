@@ -6,7 +6,7 @@
 
 👉 List of Commands
 ```
-!topsellers 👉 Get the best selling games from vapor
+!topsellers 👉 Get the best selling games from steam
 !twtich <channelName> 👉 Get the stream info from "channelName"
 !gif <gifname> 👉 Search <gifname> in giphy
 !csgostatus <steamid> 👉 Get CSGO player status with steamid
