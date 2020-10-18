@@ -129,6 +129,8 @@ BotRegisterCommand("!csgostatus", (args, command, msg) => {
     }
 });
 
+BotRegisterCommand("")
+
 BotRegisterCommand("!topsellers", function (args, command, msg) {
     // args[1] =>
     // command =>
@@ -173,7 +175,10 @@ BotRegisterCommand("!twitch", function (args, command, msg) {
 });
 
 module.exports = {
-    BotRegisterCommand
+    BotRegisterCommand,
+    client
 }
 
 client.login(process.env.BOT_TOKEN);
+
+const sfx = require("./src/services/sfx");
