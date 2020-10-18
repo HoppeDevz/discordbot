@@ -58,7 +58,7 @@ BotRegisterCommand("!song", function (args, command, msg) {
                         const stream = ytdl(url, { filter: 'audioonly' })
                             .pipe(fs.createWriteStream(path.resolve(__dirname.replace("services", "") + "sounds/music.mp3")));
 
-                        // wait download sound;
+                        // wait download youtube music;
                         loopid = setInterval(async () => {
                             if (!stream.writableFinished) return;
                             console.log("DOWNLOAD FINISHED");
