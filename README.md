@@ -2,7 +2,7 @@
   <img width="460" src="https://logodownload.org/wp-content/uploads/2017/11/discord-logo-icone.png">
 </p>
 
-## 🤖 My Discord Bot
+## 🤖 - My Discord Bot -
 
 👉 List of Commands
 ```
@@ -30,4 +30,5 @@
 ```
 
 ## ⚠ WARNING ⚠
-😉 <b>If you using windows you must install the ffmpeg for use songs commands</b>
+😉 <b>If you using windows you must install the ffmpeg for use songs commands</b> 😉
+
