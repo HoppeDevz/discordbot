@@ -8,6 +8,7 @@ const streamOptions = { seek: 0, volume: 1 };
 
 let PlayingSound = false;
 let qeue = [];
+let dispatcher;
 
 function validateYouTubeUrl(url) {
     if (url != undefined || url != '') {
@@ -21,6 +22,22 @@ function validateYouTubeUrl(url) {
         }
     }
 }
+
+BotRegisterCommand("!pause", function (args, command, msg) {
+    if (PlayingSound) {
+        dispatcher.pause();
+    } else {
+        msg.channel.send("O bot não está tocando uma música!");
+    }
+});
+
+BotRegisterCommand("!resume", function (args, command, msg) {
+    if (PlayingSound) {
+        dispatcher.resume();
+    } else {
+        msg.channel.send("O bot não está tocando uma música!");
+    }
+});
 
 BotRegisterCommand("!song", function (args, command, msg) {
     if (!args[1]) {
@@ -43,7 +60,7 @@ BotRegisterCommand("!song", function (args, command, msg) {
                         // console.log(path.resolve(__dirname.replace("services", "") + "sounds/voandoalto.mp3"));
 
                         setTimeout(async () => {
-                            const dispatcher = await con.play(path.resolve(__dirname.replace("services", "") + "sounds/music.mp3"), streamOptions);
+                            dispatcher = await con.play(path.resolve(__dirname.replace("services", "") + "sounds/music.mp3"), streamOptions);
                             dispatcher.on("finish", () => {
                                 console.log("finished track")
                                 if (qeue.length == 0) {
