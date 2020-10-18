@@ -57,9 +57,11 @@ BotRegisterCommand("!song", function (args, command, msg) {
                         console.log("[BOT JOINED IN CHANNEL]", channelId);
                         const stream = ytdl(url, { filter: 'audioonly' })
                             .pipe(fs.createWriteStream(path.resolve(__dirname.replace("services", "") + "sounds/music.mp3")));
-                        // console.log(path.resolve(__dirname.replace("services", "") + "sounds/voandoalto.mp3"));
 
-                        setTimeout(async () => {
+                        loopid = setInterval(async () => {
+                            if (!stream.writableFinished) return;
+                            console.log("DOWNLOAD FINISHED");
+                            clearInterval(loopid);
                             dispatcher = await con.play(path.resolve(__dirname.replace("services", "") + "sounds/music.mp3"), streamOptions);
                             dispatcher.on("finish", () => {
                                 console.log("finished track")
@@ -70,7 +72,7 @@ BotRegisterCommand("!song", function (args, command, msg) {
                                     qeue.shift();
                                 }
                             });
-                        }, 5000)
+                        }, 1000);
                     }
 
                     playsong(args[1]);
